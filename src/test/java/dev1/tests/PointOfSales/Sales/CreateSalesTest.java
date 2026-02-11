@@ -59,38 +59,19 @@ public class CreateSalesTest extends BaseTest {
         // Verifikasi total 4 tab: Home, Sales Lunas, Invoice, Order
         paymentPage.submitAndVerifyTabs(4);
 
-        // --- IMPROVEMENT: Switch ke tab Invoice dengan perlindungan wait ---
         Set<String> allHandles = driver.getWindowHandles();
         for (String handle : allHandles) {
             driver.switchTo().window(handle);
             try {
-                // Tunggu sampai URL mengandung keyword invoice
                 shortWait.until(ExpectedConditions.urlContains("Print_InvoiceDJ.aspx"));
                 String noInvoice = paymentPage.getInvoiceNumber();
                 System.out.println("[INFO] " + paymentType + " Invoice Berhasil Dibuat: " + noInvoice);
                 break;
             } catch (Exception e) {
-                // Bukan tab invoice, lanjut cari di handle berikutnya
             }
         }
 
         closeExtraTabs();
     }
 
-    /**
-            * Helper untuk menutup semua tab kecuali tab utama (Home)
-     * Agar test selanjutnya tidak terganggu tab yang menumpuk
-     */
-    private void closeExtraTabs() {
-        for (String handle : driver.getWindowHandles()) {
-            if (!handle.equals(mainWindowHandle)) {
-                driver.switchTo().window(handle);
-                driver.close();
-            }
-        }
-        driver.switchTo().window(mainWindowHandle);
-        driver.get(config.getProperty("HOME_URL"));
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(org.openqa.selenium.By.linkText("Point of Sales")));
-    }
 }

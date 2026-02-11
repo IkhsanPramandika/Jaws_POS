@@ -5,13 +5,9 @@
     <test name="Repair Flow Test" preserve-order="true">
         <classes>
             <class name="dev1.tests.Repair.Repair01_RegisterTest" />
-
             <class name="dev1.tests.Repair.Repair02_ServicePointTest" />
-
             <class name="dev1.tests.Repair.Repair03_FinishTest" />
-
             <class name="dev1.tests.Repair.Repair04_PaymentTest" />
-
             <class name="dev1.tests.Repair.Repair05_ReturnCustomerTest" />
         </classes>
     </test>

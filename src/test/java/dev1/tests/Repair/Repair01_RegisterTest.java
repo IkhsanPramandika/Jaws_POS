@@ -10,7 +10,7 @@ public class Repair01_RegisterTest extends BaseTest {
     @Test(description = "Step 1: Registrasi Barang Reparasi")
     public void testRegisterRepair() {
         RepairPage repairPage = new RepairPage(driver);
-        String photoPath = System.getProperty("user.dir") + "/dummy_repair.png";
+        String photoPath = System.getProperty("user.dir") + "/" + config.getProperty("REPAIR_PHOTO_NAME");
 
         repairPage.navigateToRegister();
         repairPage.searchAndPickCustomer(config.getProperty("REPAIR_CUSTOMER_PHONE"));

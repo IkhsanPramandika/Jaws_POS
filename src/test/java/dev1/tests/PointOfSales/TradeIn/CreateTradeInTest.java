@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.Collections;
 
-public class CreateTradeIn extends BaseTest {
+public class CreateTradeInTest extends BaseTest {
 
     @Test(dataProvider = "tradeInData", dataProviderClass = TestDataProviders.class,
             description = "Tahap 2: Transaksi Tukar Tambah (Trade In)")

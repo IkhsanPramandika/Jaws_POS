@@ -39,7 +39,7 @@ public class TransferPage extends BasePage {
         waitForOverlayToDisappear();
 
         // Pilih Toko Tujuan & Input Barang
-        // selectFromSelect2(selectDestStore, destStore);
+        selectFromSelect2(selectDestStore, destStore);
         type(inputPlu, plu);
         type(inputQty, qty);
         click(btnAddProduct);

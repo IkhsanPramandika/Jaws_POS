@@ -17,9 +17,6 @@ public class TransferTest extends BaseTest {
                 config.getProperty("TRANSFER_QTY"),
                 config.getProperty("TRANSFER_REMARK")
         );
-
-        // Logic untuk menangkap No Transfer dari alert/label sukses bisa ditambahkan di sini
-//        TestDataProviders.TRANSFER_NO = transferPage.getTransferNumber();
     }
 
     @Test(priority = 2, dependsOnMethods = "test01_OutgoingTransfer", description = "Step 2: Incoming Transfer")

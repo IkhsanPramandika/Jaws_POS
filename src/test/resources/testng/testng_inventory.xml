@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Inventory_Suite" verbose="1">
+    <listeners>
+        <listener class-name="dev1.utils.TestListener"/>
+    </listeners>
+    <test name="Inventory_Flow" preserve-order="true">
+        <classes>
+            <class name="dev1.tests.StockReceiving.RegisterLDTest" />
+            <class name="dev1.tests.OutletInventory.VerifyStockTest" />
+        </classes>
+    </test>
+</suite>

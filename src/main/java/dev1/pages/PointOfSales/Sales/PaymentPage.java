@@ -2,6 +2,7 @@ package dev1.pages.PointOfSales.Sales;
 
 import dev1.pages.Base.BasePage;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -90,5 +91,24 @@ public class PaymentPage extends BasePage {
         // Tunggu sampai tab invoice terbuka
         wait.until(d -> d.getWindowHandles().size() == expectedTabs);
         Assert.assertEquals(driver.getWindowHandles().size(), expectedTabs, "FAIL: Jumlah tab tidak sesuai!");
+    }
+
+    @Step("Tambah Pembayaran Down Payment")
+    public void addPaymentDownPayment(String poNumber) {
+        click(By.xpath("//a[@href='##downpayment']"));
+        click(By.xpath("//button[contains(@onclick, 'confirm_downpayment')]"));
+        click(By.id("content_save_payment_downpayment"));
+        type(By.id("content_kw"), poNumber);
+        click(By.id("content_go"));
+        click(By.xpath("//a[contains(@href, 'Payment_DPAddSave.aspx')]"));
+        waitForOverlayToDisappear();
+    }
+
+    @Step("Tambah Pembayaran Cash")
+    public void addPaymentCash(boolean isFullPayment) {
+        click(By.xpath("//a[@href='##cash']"));
+        click(By.xpath("//button[contains(@onclick, 'confirm_cash')]"));
+        click(By.id("content_save_payment_cash"));
+        waitForOverlayToDisappear();
     }
 }

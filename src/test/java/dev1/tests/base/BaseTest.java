@@ -2,10 +2,7 @@ package dev1.tests.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Attachment;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,6 +37,20 @@ public class BaseTest {
         mainWindowHandle = driver.getWindowHandle();
     }
 
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    protected void click(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
+
+    protected void type(By locator, String text) {
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        element.clear();
+        element.sendKeys(text);
+    }
+
     protected void switchToNewWindow(Set<String> existingHandles) {
         wait.until(d -> d.getWindowHandles().size() > existingHandles.size());
 
@@ -58,6 +69,39 @@ public class BaseTest {
         } catch (Exception e) {
             // Abaikan jika overlay tidak muncul atau sudah hilang
         }
+    }
+
+    protected void selectFromSelect2Dropdown(By locator, String searchText) {
+        try {
+            WebElement container = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            container.click();
+            WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-input")));
+            inputField.sendKeys(searchText);
+            inputField.sendKeys(Keys.ENTER);
+
+            waitForOverlayToDisappear();
+        } catch (Exception e) {
+            System.out.println("Gagal memilih di Select2: " + e.getMessage());
+        }
+    }
+
+    protected void selectStore() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("content_search_store"))).click();
+        type(By.id("content_keyword"), config.getProperty("DEFAULT_STORE_KEYWORD"));
+        click(By.id("content_go"));
+        click(By.xpath("//a[contains(., '" + config.getProperty("DEFAULT_STORE_NAME") + "')]"));
+        waitForOverlayToDisappear();
+    }
+
+    protected void closeExtraTabs() {
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(mainWindowHandle)) {
+                driver.switchTo().window(handle);
+                driver.close();
+            }
+        }
+        driver.switchTo().window(mainWindowHandle);
+        driver.get(config.getProperty("HOME_URL"));
     }
 
     @AfterMethod

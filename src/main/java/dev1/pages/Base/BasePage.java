@@ -17,6 +17,10 @@ public abstract class BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public void click(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
+
     protected void click(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
@@ -27,7 +31,6 @@ public abstract class BasePage {
         element.sendKeys(text);
     }
 
-    // Helper untuk Select2 Dropdown (Pindahan dari BaseTest lama)
     @Step("Pilih '{1}' dari dropdown Select2")
     protected void selectFromSelect2(WebElement select2Container, String optionText) {
         click(select2Container);
