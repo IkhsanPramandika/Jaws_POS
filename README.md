@@ -9,17 +9,6 @@ Project ini adalah kerangka kerja otomatisasi pengujian (Automation Testing Fram
 * **Automated Allure Reports**: Laporan pengujian interaktif dengan langkah-langkah `@Step` dan screenshot otomatis saat terjadi kegagalan.
 * **Centralized Configuration**: Pengaturan URL, kredensial, dan data master terpusat di satu file konfigurasi.
 
-## 📂 Struktur Direktori Project
-```text
-src
-├── main/java/dev1/pages          # Page Objects: Berisi locator (@FindBy) dan aksi UI
-└── test/java/dev1
-    ├── tests                     # Test Scripts: Berisi alur bisnis dan assertions
-    │   ├── base                  # BaseTest (Setup/TearDown)
-    │   └── [Modul Bisnis]        # DP, Sales, Repair, StockReceiving, dll
-    ├── utils                     # Helper: TestListener, ConfigReader, ExtentManager
-    └── resources/config.properties # File konfigurasi utama
-
 🛠️ Prasyarat (Prerequisites)
 1. Java JDK 11 atau lebih baru.
 2. Maven (untuk manajemen dependensi).
@@ -44,3 +33,15 @@ Framework ini terintegrasi dengan Allure Report. Untuk meninjau hasil test setel
 1. Overlay Handling: Framework ini dilengkapi dengan waitForOverlayToDisappear() untuk menangani loading spinner yang sering muncul di aplikasi POS.
 2. Tab Handling: Mendukung perpindahan tab otomatis (seperti saat print Invoice atau Sales Order).
 3. Dynamic PO: Nomor PO yang dihasilkan oleh modul Down Payment disimpan secara statis di TestDataProviders agar bisa digunakan langsung oleh modul Sales Void atau Sales with DP.
+
+## 📂 Struktur Direktori Project
+```text
+src
+├── main/java/dev1/pages          # Page Objects: Berisi locator (@FindBy) dan aksi UI
+└── test/java/dev1
+    ├── tests                     # Test Scripts: Berisi alur bisnis dan assertions
+    │   ├── base                  # BaseTest (Setup/TearDown)
+    │   └── [Modul Bisnis]        # DP, Sales, Repair, StockReceiving, dll
+    ├── utils                     # Helper: TestListener, ConfigReader, ExtentManager
+    └── resources/config.properties # File konfigurasi utama
+
