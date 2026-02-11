@@ -1,47 +1,84 @@
-# Jaws POS - Selenium Automation Framework (POM)
+Dokumentasi kamu sudah sangat bagus dan mencakup poin-poin krusial arsitektur project-nya. Saya telah merapikan formatnya agar lebih profesional, mudah dibaca (scannable), dan memberikan hierarki informasi yang lebih jelas bagi pengguna lain yang melihat GitHub kamu.
 
-Project ini adalah kerangka kerja otomatisasi pengujian (Automation Testing Framework) untuk aplikasi **Point of Sales (POS)**. Framework ini dibangun menggunakan **Java**, **Selenium WebDriver**, dan **TestNG** dengan menerapkan desain pola **Page Object Model (POM)** untuk memastikan skalabilitas dan kemudahan pemeliharaan kode.
+Berikut adalah versi yang sudah dirapikan:
 
-## 📌 Fitur Utama
-* **Arsitektur POM**: Pemisahan yang jelas antara Page Objects (UI) dan Test Scripts (Logic).
-* **Dynamic Data Flow (E2E)**: Mendukung estafet data antar modul, seperti penggunaan nomor PO dari modul Down Payment langsung ke modul Sales.
-* **Multi-Payment Support**: Automasi pembayaran kombinasi (Cash, Debit, Credit) dalam satu transaksi.
-* **Automated Allure Reports**: Laporan pengujian interaktif dengan langkah-langkah `@Step` dan screenshot otomatis saat terjadi kegagalan.
-* **Centralized Configuration**: Pengaturan URL, kredensial, dan data master terpusat di satu file konfigurasi.
+---
 
-🛠️ Prasyarat (Prerequisites)
-1. Java JDK 11 atau lebih baru.
-2. Maven (untuk manajemen dependensi).
-3. Google Chrome browser.
-4. Allure Commandline (opsional, untuk melihat report secara lokal).
+# 💎 Jaws POS - Selenium Automation Framework (POM)
 
-🚀 Cara Menjalankan (Execution)
-1. Konfigurasi Data
-Sesuaikan data pengujian pada file src/test/resources/config.properties
-2. Jalankan Suite Menggunakan TestNG
-Gunakan perintah Maven berikut untuk menjalankan suite tertentu:
-Menjalankan Master E2E Flow: mvn test -DsuiteXmlFile=src/test/resources/testng/testng.xml
-Menjalankan Modul Sales Only: mvn test -DsuiteXmlFile=src/test/resources/testng/testng_pos_sales.xml
-Menjalankan Modul Repair (E2E Step 1-5): mvn test -DsuiteXmlFile=src/test/resources/testng/testng-repair.xml
+Project ini merupakan framework **Automation Testing** untuk aplikasi **Point of Sales (POS)**. Arsitektur dibangun menggunakan desain pola **Page Object Model (POM)** untuk menjamin skalabilitas, keterbacaan, dan kemudahan pemeliharaan kode dalam jangka panjang.
 
-📊 Pelaporan (Reporting)
-Framework ini terintegrasi dengan Allure Report. Untuk meninjau hasil test setelah eksekusi, jalankan:
-1. Buka terminal di root project.
-2. Jalankan perintah: allure serve allure-results
+---
 
-📝 Catatan Penting
-1. Overlay Handling: Framework ini dilengkapi dengan waitForOverlayToDisappear() untuk menangani loading spinner yang sering muncul di aplikasi POS.
-2. Tab Handling: Mendukung perpindahan tab otomatis (seperti saat print Invoice atau Sales Order).
-3. Dynamic PO: Nomor PO yang dihasilkan oleh modul Down Payment disimpan secara statis di TestDataProviders agar bisa digunakan langsung oleh modul Sales Void atau Sales with DP.
+## 🚀 Fitur Utama
+
+* **Arsitektur POM**: Pemisahan tegas antara logika UI (Page Objects) dan skrip pengujian (Test Scripts).
+* **Dynamic Data Flow (E2E)**: Mendukung estafet data antar modul secara otomatis, seperti penggunaan nomor PO hasil transaksi *Down Payment* ke dalam modul *Sales*.
+* **Multi-Payment Support**: Automasi alur pembayaran kombinasi (*Cash, Debit, Credit*) dalam satu sesi transaksi.
+* **Automated Allure Reports**: Laporan interaktif yang dilengkapi dengan anotasi `@Step` dan tangkapan layar otomatis jika terjadi kegagalan.
+* **Centralized Configuration**: Seluruh pengaturan URL, kredensial, dan data master dikelola secara terpusat melalui satu file konfigurasi.
+
+---
 
 ## 📂 Struktur Direktori Project
+
 ```text
 src
-├── main/java/dev1/pages          # Page Objects: Berisi locator (@FindBy) dan aksi UI
+├── main/java/dev1/pages            # Page Objects: Berisi locator (@FindBy) dan aksi UI
 └── test/java/dev1
-    ├── tests                     # Test Scripts: Berisi alur bisnis dan assertions
-    │   ├── base                  # BaseTest (Setup/TearDown)
-    │   └── [Modul Bisnis]        # DP, Sales, Repair, StockReceiving, dll
-    ├── utils                     # Helper: TestListener, ConfigReader, ExtentManager
-    └── resources/config.properties # File konfigurasi utama
+    ├── tests                       # Test Scripts: Berisi alur bisnis dan assertions
+    │   ├── base                    # BaseTest (Setup, TearDown, & Common Helpers)
+    │   └── [Modul Bisnis]          # Skenario: DP, Sales, Repair, StockReceiving, dll
+    ├── utils                       # Helpers: TestListener, ConfigReader, ExtentManager
+    └── resources
+        ├── config.properties       # File konfigurasi utama
+        └── testng                  # File XML untuk eksekusi Test Suite
 
+```
+
+---
+
+## 🛠️ Prasyarat (Prerequisites)
+
+1. **Java JDK 11** atau versi terbaru.
+2. **Maven** (Manajemen dependensi).
+3. **Google Chrome** (Browser eksekusi).
+4. **Allure Commandline** (Opsional, untuk visualisasi laporan secara lokal).
+
+---
+
+## ⚙️ Cara Menjalankan (Execution)
+
+### 1. Konfigurasi Data
+
+Sesuaikan data pengujian pada file:
+
+`src/test/resources/config.properties`
+
+### 2. Jalankan Suite via Maven
+
+Gunakan perintah berikut di terminal untuk menjalankan suite tertentu:
+
+* **Full E2E Flow**: `mvn test -DsuiteXmlFile=src/test/resources/testng/testng.xml`
+* **Sales Module Only**: `mvn test -DsuiteXmlFile=src/test/resources/testng/testng_pos_sales.xml`
+* **Repair E2E (Step 1-5)**: `mvn test -DsuiteXmlFile=src/test/resources/testng/testng-repair.xml`
+
+---
+
+## 📊 Pelaporan (Reporting)
+
+Framework ini terintegrasi penuh dengan **Allure Report**. Untuk meninjau hasil eksekusi:
+
+1. Buka terminal pada root project.
+2. Jalankan perintah:
+`allure serve allure-results`
+
+---
+
+## 📝 Catatan Penting
+
+* **Overlay Handling**: Menggunakan method `waitForOverlayToDisappear()` untuk menangani *loading spinner* yang sering muncul secara dinamis.
+* **Tab Handling**: Mendukung perpindahan tab otomatis secara stabil, khususnya pada proses cetak *Invoice* atau *Sales Order*.
+* **Dynamic PO**: Nomor PO hasil modul *Down Payment* disimpan secara statis di `TestDataProviders` agar dapat dikonsumsi langsung oleh modul *Sales Void* atau *Sales with DP*.
+
+---
